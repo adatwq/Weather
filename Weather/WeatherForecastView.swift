@@ -61,7 +61,27 @@ struct WeatherForecastView: View {
       }
     }
     .onAppear {
-      // Do your fetching here using URLSession
+      let apiKey: String = "8f31ab935c42e9f805ef1fa7b40c8821"
+      let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)&appid=\(apiKey)"
+      let url = URL(string: urlString)!
+      
+      let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        guard
+          let data = data,
+          let response = response
+        else {
+          weatherError = error?.localizedDescription ?? "Undefined Error"
+          didLoadCityWeatherInformationSuccessfully = false
+          Logger.error(weatherError)
+          return
+        }
+        weatherData = data
+        weatherResponse = response
+        didLoadCityWeatherInformationSuccessfully = true
+        Logger.success(weatherResponse)
+      }
+      
+      task.resume()
     }
   }
 }
