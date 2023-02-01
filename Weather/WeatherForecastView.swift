@@ -70,33 +70,35 @@ struct WeatherForecastView: View {
       }
     }
     .navigationTitle("\(cityName.capitalized) Weather")
-    .onAppear {
-      let apiKey: String = "8f31ab935c42e9f805ef1fa7b40c8821"
-      let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)&appid=\(apiKey)"
-      let url = URL(string: urlString)!
-      
-      let task = URLSession.shared.dataTask(with: url) { data, response, error in
-        guard let data = data else {
-          weatherError = error?.localizedDescription ?? "Undefined Error"
-          didLoadCityWeatherInformationSuccessfully = false
-          Logger.error(weatherError)
-          return
-        }
-        
-        let decoder = JSONDecoder()
-        if let decodedWeatherData = try? decoder.decode(WeatherData.self, from: data) {
-          weatherData = decodedWeatherData
-          didLoadCityWeatherInformationSuccessfully = true
-          Logger.success(weatherData)
-        } else {
-          didLoadCityWeatherInformationSuccessfully = false
-          weatherError = "Undecodable data"
-          Logger.error(weatherError, String(data: data, encoding: .utf8), separator: "\n")
-        }
+    .onAppear(perform: fetchWeatherData)
+  }
+  
+  func fetchWeatherData() {
+    let apiKey: String = "8f31ab935c42e9f805ef1fa7b40c8821"
+    let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)&appid=\(apiKey)"
+    let url = URL(string: urlString)!
+    
+    let task = URLSession.shared.dataTask(with: url) { data, response, error in
+      guard let data = data else {
+        weatherError = error?.localizedDescription ?? "Undefined Error"
+        didLoadCityWeatherInformationSuccessfully = false
+        Logger.error(weatherError)
+        return
       }
       
-      task.resume()
+      let decoder = JSONDecoder()
+      if let decodedWeatherData = try? decoder.decode(WeatherData.self, from: data) {
+        weatherData = decodedWeatherData
+        didLoadCityWeatherInformationSuccessfully = true
+        Logger.success(weatherData)
+      } else {
+        didLoadCityWeatherInformationSuccessfully = false
+        weatherError = "Undecodable data"
+        Logger.error(weatherError, String(data: data, encoding: .utf8), separator: "\n")
+      }
     }
+    
+    task.resume()
   }
 }
 
