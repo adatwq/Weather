@@ -43,8 +43,7 @@ struct WeatherForecastView: View {
               .padding()
               .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
             
-            if let temp = weatherData.main?.temp?.description {
-              // Notice: this temp is in Kelvin.. convert it to Celsius or read more in the API Documentation and see if it provided in Celsius
+            if let temp = weatherData.main?.temp?.fromKelvinToCelsius.description {
               Text(temp)
                 .padding()
             } else {

@@ -15,6 +15,7 @@
 		4A48ACBC298A59B300F17EBA /* WeatherForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A48ACBB298A59B300F17EBA /* WeatherForecastView.swift */; };
 		4A48ACBE298A5FD000F17EBA /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A48ACBD298A5FD000F17EBA /* Logger.swift */; };
 		4A48ACC2298A64E200F17EBA /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A48ACC1298A64E200F17EBA /* WeatherData.swift */; };
+		4A48ACC4298A888600F17EBA /* DoubleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A48ACC3298A888600F17EBA /* DoubleExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		4A48ACBB298A59B300F17EBA /* WeatherForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForecastView.swift; sourceTree = "<group>"; };
 		4A48ACBD298A5FD000F17EBA /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		4A48ACC1298A64E200F17EBA /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		4A48ACC3298A888600F17EBA /* DoubleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				4A48ACBB298A59B300F17EBA /* WeatherForecastView.swift */,
 				4A48ACC1298A64E200F17EBA /* WeatherData.swift */,
 				4A48ACBD298A5FD000F17EBA /* Logger.swift */,
+				4A48ACC3298A888600F17EBA /* DoubleExtension.swift */,
 				4A48ACAF298A568F00F17EBA /* Assets.xcassets */,
 				4A48ACB1298A568F00F17EBA /* Preview Content */,
 			);
@@ -154,6 +157,7 @@
 				4A48ACAC298A568E00F17EBA /* WeatherApp.swift in Sources */,
 				4A48ACBC298A59B300F17EBA /* WeatherForecastView.swift in Sources */,
 				4A48ACC2298A64E200F17EBA /* WeatherData.swift in Sources */,
+				4A48ACC4298A888600F17EBA /* DoubleExtension.swift in Sources */,
 				4A48ACBA298A57B700F17EBA /* CityPickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
