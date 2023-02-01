@@ -6,8 +6,7 @@ struct WeatherForecastView: View {
   
   let cityName: String
   
-  @State var weatherData: Data = .init()
-  @State var weatherResponse: URLResponse = .init()
+  @State var weatherData: WeatherData = .init()
   @State var weatherError: String = .init()
   @State var didLoadCityWeatherInformationSuccessfully: Optional<Bool> = .none
 
@@ -39,11 +38,21 @@ struct WeatherForecastView: View {
           }
           .padding()
           Divider()
-          Text(weatherData.description)
-            .padding()
+          HStack {
+            Text("Temperature:")
+              .padding()
+              .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+            
+            if let temp = weatherData.main?.temp?.description {
+              // Notice: this temp is in Kelvin.. convert it to Celsius or read more in the API Documentation and see if it provided in Celsius
+              Text(temp)
+                .padding()
+            } else {
+              Text("Unable to load temp")
+                .padding()
+            }
+          }
           Divider()
-          Text(weatherResponse.description)
-            .padding()
         } else {
           HStack {
             Circle()
@@ -60,25 +69,30 @@ struct WeatherForecastView: View {
         }
       }
     }
+    .navigationTitle("\(cityName.capitalized) Weather")
     .onAppear {
       let apiKey: String = "8f31ab935c42e9f805ef1fa7b40c8821"
       let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)&appid=\(apiKey)"
       let url = URL(string: urlString)!
       
       let task = URLSession.shared.dataTask(with: url) { data, response, error in
-        guard
-          let data = data,
-          let response = response
-        else {
+        guard let data = data else {
           weatherError = error?.localizedDescription ?? "Undefined Error"
           didLoadCityWeatherInformationSuccessfully = false
           Logger.error(weatherError)
           return
         }
-        weatherData = data
-        weatherResponse = response
-        didLoadCityWeatherInformationSuccessfully = true
-        Logger.success(weatherResponse)
+        
+        let decoder = JSONDecoder()
+        if let decodedWeatherData = try? decoder.decode(WeatherData.self, from: data) {
+          weatherData = decodedWeatherData
+          didLoadCityWeatherInformationSuccessfully = true
+          Logger.success(weatherData)
+        } else {
+          didLoadCityWeatherInformationSuccessfully = false
+          weatherError = "Undecodable data"
+          Logger.error(weatherError, String(data: data, encoding: .utf8), separator: "\n")
+        }
       }
       
       task.resume()
