@@ -71,7 +71,9 @@ struct WeatherForecastView: View {
   }
   
   func fetchWeatherData() {
-    weatherFetcher.fetch(cityName: cityName)
+    Task {
+      await weatherFetcher.fetch(cityName: cityName)
+    }
   }
 }
 

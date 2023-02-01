@@ -14,18 +14,11 @@ final class WeatherFetcherViewModel: ObservableObject {
     apiKey = "8f31ab935c42e9f805ef1fa7b40c8821"
   }
   
-  func fetch(cityName: String) {
+  func fetch(cityName: String) async {
     let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)&appid=\(apiKey)"
     let url = URL(string: urlString)!
     
-    let task = URLSession.shared.dataTask(with: url) { data, response, error in
-      guard let data = data else {
-        self.error = error?.localizedDescription ?? "Undefined Error"
-        self.didLoadSuccessfully = false
-        Logger.error(self.error)
-        return
-      }
-      
+    if let (data, response) = try? await URLSession.shared.data(from: url) {
       let decoder = JSONDecoder()
       if let decodedWeatherData = try? decoder.decode(WeatherData.self, from: data) {
         self.data = decodedWeatherData
@@ -36,8 +29,10 @@ final class WeatherFetcherViewModel: ObservableObject {
         self.error = "Undecodable data"
         Logger.error(self.error, String(data: data, encoding: .utf8), separator: "\n")
       }
+    } else {
+      self.error = "Unhandled Error"
+      self.didLoadSuccessfully = false
+      Logger.error(self.error)
     }
-    
-    task.resume()
   }
 }
