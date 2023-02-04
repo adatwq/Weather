@@ -74,7 +74,7 @@ struct WeatherForecastView: View {
   }
   
   func fetchWeatherData() {
-    let apiKey: String = "8f31ab935c42e9f805ef1fa7b40c8821"
+    let apiKey: String = "Put your API_KEY here"
     let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)&appid=\(apiKey)"
     let url = URL(string: urlString)!
     
