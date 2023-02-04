@@ -11,7 +11,7 @@ final class WeatherFetcherViewModel: ObservableObject {
   @Published var didLoadSuccessfully: Optional<Bool> = .none
   
   init() {
-    apiKey = "8f31ab935c42e9f805ef1fa7b40c8821"
+    apiKey = "Put your API_KEY here"
   }
   
   func fetch(cityName: String) {
